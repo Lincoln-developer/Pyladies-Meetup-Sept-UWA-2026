@@ -88,6 +88,20 @@
   --sidebar-ring: #1b5e20;
 }
 
+@keyframes image-drift {
+  0%, 100% { transform: scale(1.02) translate3d(0, 0, 0); }
+  50% { transform: scale(1.08) translate3d(-0.7%, -0.5%, 0); }
+}
+
+.image-drift {
+  animation: image-drift 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-drift { animation: none; }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
