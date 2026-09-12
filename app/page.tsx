@@ -1,47 +1,107 @@
-export default function Page() {
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import {
+  ArrowRight, Binoculars, Bird, ChevronDown, Clock3, Compass, Download, Share2,
+  Footprints, Camera, Leaf, MapPin, Menu, Mountain, PlayCircle, Search, ShieldCheck,
+  TreePine, Users, X, Phone, AlertTriangle, Mail, CalendarDays,
+} from 'lucide-react'
+
+const parks = [
+  { name: 'Bwindi Impenetrable', location: 'South-western Uganda', size: '331 km²', wildlife: 'Mountain gorillas · Forest elephants', activity: 'Gorilla trekking', image: 'https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Queen Elizabeth', location: 'Western Uganda', size: '1,978 km²', wildlife: 'Tree-climbing lions · Hippos', activity: 'Game drives', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Murchison Falls', location: 'Northern Uganda', size: '3,893 km²', wildlife: 'Elephants · Giraffes · Nile crocodiles', activity: 'Boat cruises', image: 'https://images.unsplash.com/photo-1535338454770-8be927b5a00b?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Kidepo Valley', location: 'North-eastern Uganda', size: '1,442 km²', wildlife: 'Cheetahs · Ostrich · Buffalo', activity: 'Wilderness safari', image: 'https://images.unsplash.com/photo-1519659528534-7fd733a832a0?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Kibale Forest', location: 'Western Uganda', size: '795 km²', wildlife: 'Chimpanzees · 375 bird species', activity: 'Chimp tracking', image: 'https://images.unsplash.com/photo-1504173010664-32509aeebb62?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Lake Mburo', location: 'Central Uganda', size: '370 km²', wildlife: 'Zebra · Eland · Impala', activity: 'Walking safari', image: 'https://images.unsplash.com/photo-1534188753412-8e2c0b13c5d1?auto=format&fit=crop&w=1000&q=85' },
+]
+
+const wildlife = [
+  ['Mountain Gorilla', 'Primates', 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?auto=format&fit=crop&w=900&q=85'],
+  ['African Elephant', 'Mammals', 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=900&q=85'],
+  ['Shoebill', 'Birds', 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=900&q=85'],
+  ['Tree-climbing Lion', 'Mammals', 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=900&q=85'],
+]
+
+const services = [
+  ['Gorilla Permit', 'Secure your once-in-a-lifetime encounter with mountain gorillas.', 'Popular', Footprints],
+  ['Chimpanzee Permit', 'Track our closest living relatives in Kibale Forest.', 'Available', Bird],
+  ['Research Permit', 'Apply to support responsible conservation science in Uganda.', 'Review required', Search],
+  ['Park Entry Tickets', 'Plan your visit and pay park fees before you arrive.', 'Digital service', Compass],
+]
+
+const faqs = ['How do I apply for a gorilla permit?', 'What is the best time to visit Uganda?', 'What should I pack for a safari?', 'How does UWA support local communities?', 'What are the rules for photography?']
+
+export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [activeFaq, setActiveFaq] = useState(0)
+  const [parkSearch, setParkSearch] = useState('')
+  const [activeWildlife, setActiveWildlife] = useState(0)
+  const filteredParks = parks.filter((park) => park.name.toLowerCase().includes(parkSearch.toLowerCase()))
+
   return (
-    <main
-      style={{
-        colorScheme: 'light dark',
-        position: 'relative',
-        display: 'flex',
-        minHeight: '100vh',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'light-dark(#fff, #000)',
-        color: 'light-dark(#000, #fff)',
-      }}
-    >
-      <svg
-        aria-hidden="true"
-        style={{ width: 80, height: 80 }}
-        width={80}
-        height={80}
-        fill="none"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="currentColor"
-        strokeWidth="0.5"
-      >
-        <path
-          d="M14.2 14.2H17V6.9375C17 4.76288 15.2371 3 13.0625 3H5.8V5.8M14.2 14.2V7.79063L7.79062 14.2H14.2ZM14.2 14.2V17H6.9375C4.76288 17 3 15.2371 3 13.0625V5.8H5.8M5.8 5.8V12.2313L12.2313 5.8H5.8Z"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <p
-        style={{
-          position: 'absolute',
-          left: '50%',
-          top: 'calc(50% + 56px)',
-          transform: 'translateX(-50%)',
-          whiteSpace: 'nowrap',
-          fontSize: '14px',
-          fontWeight: 500,
-          color: 'light-dark(#71717a, #a1a1aa)',
-        }}
-      >
-        Your v0 generation will show here.
-      </p>
+    <main className="min-h-screen bg-background text-foreground">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/15 bg-[#123d24]/85 text-white backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+          <a href="#top" className="flex items-center gap-3" aria-label="UWA home">
+            <div className="flex size-10 items-center justify-center rounded-full border border-[#d8c477] text-[#d8c477]"><TreePine size={20} /></div>
+            <div><div className="font-serif text-lg leading-none">UWA</div><div className="text-[9px] uppercase tracking-[0.23em] text-white/65">Uganda Wildlife Authority</div></div>
+          </a>
+          <nav className="hidden items-center gap-7 text-sm lg:flex" aria-label="Primary navigation">
+            <a href="#parks" className="hover:text-[#d8c477]">Visit Uganda</a><a href="#services" className="hover:text-[#d8c477]">Permits & Services</a><a href="#conservation" className="hover:text-[#d8c477]">Conservation</a><a href="#stories" className="hover:text-[#d8c477]">Stories</a>
+            <a href="#contact" className="rounded-full border border-white/40 px-4 py-2 hover:border-[#d8c477] hover:text-[#d8c477]">Contact UWA</a>
+          </nav>
+          <button className="lg:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'}>{menuOpen ? <X /> : <Menu />}</button>
+        </div>
+        {menuOpen && <nav className="flex flex-col gap-4 border-t border-white/15 bg-[#123d24] px-5 py-5 lg:hidden"><a href="#parks" onClick={() => setMenuOpen(false)}>Visit Uganda</a><a href="#services" onClick={() => setMenuOpen(false)}>Permits & Services</a><a href="#conservation" onClick={() => setMenuOpen(false)}>Conservation</a><a href="#stories" onClick={() => setMenuOpen(false)}>Stories</a></nav>}
+      </header>
+
+      <section id="top" className="relative flex min-h-[720px] items-end overflow-hidden bg-[#123d24] text-white">
+        <img src="/uwa-hero.png" alt="Mountain gorilla in the Bwindi forest" className="absolute inset-0 size-full object-cover object-center" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0b2619]/90 via-[#0b2619]/55 to-transparent" />
+        <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-48 lg:px-8 lg:pb-24">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8 }} className="max-w-3xl">
+            <p className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#d8c477]"><span className="h-px w-10 bg-[#d8c477]" /> Uganda’s living heritage</p>
+            <h1 className="font-serif text-5xl leading-[1.03] tracking-tight md:text-7xl">Protecting Uganda&apos;s wildlife. <em className="text-[#d8c477]">Inspiring</em> generations.</h1>
+            <p className="mt-7 max-w-xl text-base leading-7 text-white/80 md:text-lg">Explore breathtaking national parks, plan an unforgettable safari, and join the work of protecting one of Africa&apos;s most extraordinary landscapes.</p>
+            <div className="mt-9 flex flex-wrap gap-3"><a href="#parks" className="inline-flex items-center gap-2 rounded-full bg-[#d8c477] px-6 py-3 font-semibold text-[#123d24] shadow-lg transition hover:-translate-y-0.5">Explore national parks <ArrowRight size={17} /></a><a href="#services" className="inline-flex items-center gap-2 rounded-full border border-white/45 px-6 py-3 font-semibold transition hover:border-white">Apply for a permit</a></div>
+          </motion.div>
+          <div className="mt-16 grid max-w-4xl grid-cols-2 gap-y-6 border-t border-white/25 pt-6 sm:grid-cols-4"><Stat value="10" label="National parks" /><Stat value="12" label="Wildlife reserves" /><Stat value="1,000+" label="Wildlife species" /><Stat value="17M+" label="Protected acres" /></div>
+        </div>
+      </section>
+
+      <section id="parks" className="bg-[#f8f5ef] px-5 py-20 lg:px-8 lg:py-28"><div className="mx-auto max-w-7xl"><SectionIntro eyebrow="Plan your visit" title="Wild places, deeply alive." copy="From misty mountain forests to the sweeping savannah, Uganda offers a remarkable variety of landscapes and encounters." /><div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><div className="flex items-center gap-2 rounded-full border border-[#d7d0c2] bg-white px-4 py-2.5 sm:w-72"><Search size={17} className="text-[#6d4c41]" /><input aria-label="Search parks" value={parkSearch} onChange={(e) => setParkSearch(e.target.value)} placeholder="Search national parks" className="w-full bg-transparent text-sm outline-none placeholder:text-[#8d887f]" /></div><p className="text-sm text-[#6d4c41]">{filteredParks.length} destinations to explore</p></div><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{filteredParks.map((park, i) => <ParkCard key={park.name} park={park} index={i} />)}</div></div></section>
+
+      <section className="bg-white px-5 py-20 lg:px-8 lg:py-28"><div className="mx-auto max-w-7xl"><SectionIntro eyebrow="Meet the wild" title="A closer look at Uganda." copy="Our protected areas shelter an incredible cast of species, each one part of a living ecosystem worth protecting." /><div className="grid gap-4 md:grid-cols-4">{wildlife.map(([name, category, image], i) => <button key={name} onClick={() => setActiveWildlife(i)} className={`group relative h-80 overflow-hidden rounded-2xl text-left md:h-[430px] ${i === activeWildlife ? 'md:-translate-y-3' : ''} transition duration-500`}><img src={image} alt={name} className="size-full object-cover transition duration-700 group-hover:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-[#0b2619]/85 via-transparent to-transparent" /><div className="absolute inset-x-0 bottom-0 p-5 text-white"><p className="text-xs uppercase tracking-[0.22em] text-[#d8c477]">{category}</p><h3 className="mt-2 font-serif text-2xl">{name}</h3><span className="mt-4 inline-flex items-center gap-1 text-sm opacity-0 transition group-hover:opacity-100">Discover species <ArrowRight size={14} /></span></div></button>)}</div></div></section>
+
+      <section className="overflow-hidden bg-[#e8eee5] px-5 py-20 lg:px-8 lg:py-28"><div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-20"><div><SectionIntro eyebrow="Plan your safari" title="Choose your way into the wild." copy="Build a journey that feels like your own. Find the right activity, destination, and season for an extraordinary Uganda experience." /><a href="#experiences" className="mt-7 inline-flex items-center gap-2 font-semibold text-[#1b5e20]">View all experiences <ArrowRight size={17} /></a></div><div className="grid grid-cols-2 gap-3">{[['Gorilla trekking', 'Bwindi & Mgahinga', 'Jun–Sep', Footprints], ['Boat cruises', 'Murchison Falls', 'Year-round', Compass], ['Bird watching', 'Across Uganda', 'Mar–May', Bird], ['Mountain hiking', 'Rwenzori Mountains', 'Dec–Feb', Mountain]].map(([title, destination, season, Icon]) => <div key={String(title)} className="rounded-2xl bg-white p-5 shadow-sm"><Icon className="text-[#1b5e20]" size={24} /><h3 className="mt-8 font-serif text-xl text-[#123d24]">{String(title)}</h3><p className="mt-2 text-sm text-[#6d4c41]">{String(destination)}</p><div className="mt-5 flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#8c7752]"><CalendarDays size={14} /> {String(season)}</div></div>)}</div></div></section>
+
+      <section id="services" className="bg-[#123d24] px-5 py-20 text-white lg:px-8 lg:py-28"><div className="mx-auto max-w-7xl"><SectionIntro eyebrow="Government services" title="Your visit, made simpler." copy="Access official permits, tickets, and services through the Uganda Wildlife Authority." light /><div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">{services.map(([title, copy, status, Icon]) => <div key={String(title)} className="flex min-h-64 flex-col rounded-2xl border border-white/15 bg-white/[.07] p-6 transition hover:-translate-y-1 hover:bg-white/10"><div className="flex items-start justify-between"><Icon className="text-[#d8c477]" size={25} /><span className="rounded-full bg-[#d8c477]/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#e7d896]">{String(status)}</span></div><h3 className="mt-9 font-serif text-2xl">{String(title)}</h3><p className="mt-2 flex-1 text-sm leading-6 text-white/65">{String(copy)}</p><button className="mt-5 flex items-center gap-2 text-sm font-semibold text-[#d8c477]">Start application <ArrowRight size={15} /></button></div>)}</div></div></section>
+
+      <section id="conservation" className="bg-[#f8f5ef] px-5 py-20 lg:px-8 lg:py-28"><div className="mx-auto max-w-7xl"><SectionIntro eyebrow="Conservation impact" title="Protection is a shared promise." copy="Every permit, visit, and partnership helps UWA safeguard habitats, support communities, and keep Uganda’s wild spaces thriving." /><div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><Impact icon={ShieldCheck} value="7.3M" label="Acres under protection" /><Impact icon={Users} value="3,500+" label="Rangers across Uganda" /><Impact icon={Leaf} value="140+" label="Community projects" /><Impact icon={TreePine} value="28K" label="Hectares restored" /></div></div></section>
+
+      <section id="stories" className="bg-white px-5 py-20 lg:px-8 lg:py-28"><div className="mx-auto max-w-7xl"><div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><SectionIntro eyebrow="Field notes" title="Stories from the wild." copy="News, research, and the people making conservation possible." /><a href="#stories" className="inline-flex items-center gap-2 pb-1 font-semibold text-[#1b5e20]">All stories <ArrowRight size={16} /></a></div><div className="mt-12 grid gap-5 lg:grid-cols-[1.35fr_1fr_1fr]"><article className="group overflow-hidden rounded-2xl bg-[#f8f5ef]"><div className="h-72 overflow-hidden"><img src="https://images.unsplash.com/photo-1535338454770-8be927b5a00b?auto=format&fit=crop&w=1200&q=85" alt="Elephants near a waterway" className="size-full object-cover transition duration-700 group-hover:scale-105" /></div><div className="p-6"><p className="text-xs font-bold uppercase tracking-wider text-[#8c7752]">Conservation · 6 min read</p><h3 className="mt-3 font-serif text-3xl text-[#123d24]">Living alongside Uganda’s elephants</h3><p className="mt-3 text-sm leading-6 text-[#6d4c41]">How communities near Murchison Falls are building a safer future for people and wildlife.</p></div></article>{[['Restoring the Rwenzori’s high forests', 'Research · 4 min read', 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85'], ['The quiet guardians of the savannah', 'People · 5 min read', 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=900&q=85']].map(([title, meta, image]) => <article key={title} className="group overflow-hidden rounded-2xl border border-[#e1ddd4]"><div className="h-52 overflow-hidden"><img src={image} alt="" className="size-full object-cover transition duration-700 group-hover:scale-105" /></div><div className="p-5"><p className="text-xs font-bold uppercase tracking-wider text-[#8c7752]">{meta}</p><h3 className="mt-3 font-serif text-2xl text-[#123d24]">{title}</h3><a href="#contact" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#1b5e20]">Read story <ArrowRight size={15} /></a></div></article>)}</div></div></section>
+
+      <section id="experiences" className="bg-[#dce7d7] px-5 py-20 lg:px-8 lg:py-24"><div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 md:flex-row md:items-end"><SectionIntro eyebrow="Go deeper" title="Experiences with meaning." copy="Travel well, travel responsibly, and leave with a deeper connection to Uganda." /><button className="inline-flex items-center gap-2 rounded-full bg-[#123d24] px-5 py-3 text-sm font-semibold text-white">Browse experiences <ArrowRight size={15} /></button></div><div className="mt-10 flex gap-4 overflow-x-auto pb-4">{[['Gorilla Trek', 'Bwindi Impenetrable', 'https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=800&q=85'], ['Nile Boat Cruise', 'Murchison Falls', 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=85'], ['Birding Safari', 'Lake Mburo', 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=800&q=85'], ['Big Five Safari', 'Queen Elizabeth', 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=85']].map(([title, place, image]) => <div key={title} className="min-w-[275px] overflow-hidden rounded-2xl bg-white shadow-sm sm:min-w-[320px]"><img src={image} alt={title} className="h-52 w-full object-cover" /><div className="p-5"><p className="text-xs uppercase tracking-wider text-[#8c7752]">{place}</p><h3 className="mt-2 font-serif text-2xl text-[#123d24]">{title}</h3><button className="mt-5 text-sm font-semibold text-[#1b5e20]">Book experience <ArrowRight className="ml-1 inline" size={15} /></button></div></div>)}</div></section>
+
+      <section className="bg-[#f8f5ef] px-5 py-20 lg:px-8 lg:py-24"><div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.8fr_1.2fr]"><div><SectionIntro eyebrow="Visitor education" title="Learn before you go." copy="Good journeys begin with knowledge. Explore practical resources for a safe, respectful visit." /><button className="mt-7 inline-flex items-center gap-2 font-semibold text-[#1b5e20]">Visit education hub <ArrowRight size={16} /></button></div><div className="grid gap-3 sm:grid-cols-2">{['Uganda’s ecosystems', 'Endangered species', 'National park rules', 'Wildlife safety tips', 'Conservation programs', 'Schools outreach'].map((item) => <a href="#contact" key={item} className="flex items-center justify-between rounded-xl border border-[#ded8cb] bg-white p-5 font-serif text-lg text-[#123d24] transition hover:border-[#1b5e20]">{item}<Download size={17} className="text-[#8c7752]" /></a>)}</div></div></section>
+
+      <section className="bg-[#6d4c41] px-5 py-16 text-white lg:px-8"><div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center"><div className="max-w-2xl"><p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#e7d896]"><AlertTriangle size={15} /> Wildlife emergency reporting</p><h2 className="mt-4 font-serif text-4xl">See something that needs our attention?</h2><p className="mt-3 text-white/75">Report illegal hunting, human-wildlife conflict, or an injured animal. Your report helps us respond quickly.</p></div><button className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-[#6d4c41]">Report an incident <ArrowRight size={16} /></button></div></section>
+
+      <section className="bg-white px-5 py-20 lg:px-8 lg:py-28"><div className="mx-auto grid max-w-5xl gap-14 lg:grid-cols-[.8fr_1.2fr]"><SectionIntro eyebrow="Questions answered" title="Plan with confidence." copy="Find clear guidance for your visit to Uganda’s protected areas." /><div className="divide-y divide-[#ded8cb] border-y border-[#ded8cb]">{faqs.map((faq, i) => <div key={faq}><button onClick={() => setActiveFaq(activeFaq === i ? -1 : i)} className="flex w-full items-center justify-between py-5 text-left font-semibold text-[#123d24]"><span>{faq}</span><ChevronDown size={18} className={`transition ${activeFaq === i ? 'rotate-180' : ''}`} /></button>{activeFaq === i && <p className="pb-5 pr-8 text-sm leading-6 text-[#6d4c41]">Our visitor services team can guide you through this. Start with the official UWA services portal or contact the team directly for current requirements and availability.</p>}</div>)}</div></div></section>
+
+      <footer id="contact" className="bg-[#0b2619] px-5 pb-8 pt-16 text-white lg:px-8"><div className="mx-auto max-w-7xl"><div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1.2fr]"><div><div className="flex items-center gap-3"><div className="flex size-10 items-center justify-center rounded-full border border-[#d8c477] text-[#d8c477]"><TreePine size={20} /></div><div><div className="font-serif text-lg">UWA</div><div className="text-[9px] uppercase tracking-[0.23em] text-white/55">Uganda Wildlife Authority</div></div></div><p className="mt-6 max-w-xs text-sm leading-6 text-white/60">Protecting Uganda’s wildlife and wild places for the benefit of present and future generations.</p><div className="mt-7 flex gap-3"><a href="#contact" aria-label="Social updates" className="rounded-full border border-white/20 p-2"><Share2 size={16} /></a><a href="#contact" aria-label="Photo updates" className="rounded-full border border-white/20 p-2"><Camera size={16} /></a><a href="#contact" aria-label="Video updates" className="rounded-full border border-white/20 p-2"><PlayCircle size={16} /></a><a href="#contact" aria-label="Community" className="rounded-full border border-white/20 p-2"><Users size={16} /></a></div></div><FooterColumn title="Explore" links={['National parks', 'Wildlife reserves', 'Experiences', 'Visitor education']} /><FooterColumn title="UWA" links={['About us', 'Conservation', 'Careers', 'News & stories']} /><div><h3 className="font-semibold">Stay connected</h3><p className="mt-4 text-sm leading-6 text-white/60">Get park updates, conservation stories, and travel inspiration.</p><div className="mt-4 flex overflow-hidden rounded-full border border-white/20"><input aria-label="Email address" placeholder="Your email address" className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm outline-none placeholder:text-white/40" /><button aria-label="Subscribe" className="bg-[#d8c477] px-4 text-[#123d24]"><ArrowRight size={17} /></button></div><div className="mt-5 space-y-2 text-sm text-white/60"><p className="flex items-center gap-2"><Phone size={14} /> +256 (0) 414 355 000</p><p className="flex items-center gap-2"><Mail size={14} /> info@uwa.or.ug</p></div></div></div><div className="mt-14 flex flex-col justify-between gap-3 border-t border-white/15 pt-6 text-xs text-white/45 md:flex-row"><p>© {new Date().getFullYear()} Uganda Wildlife Authority. All rights reserved.</p><p>Privacy · Accessibility · Terms of use</p></div></div></footer>
     </main>
   )
 }
+
+function Stat({ value, label }: { value: string; label: string }) { return <div><div className="font-serif text-3xl text-[#d8c477]">{value}</div><div className="mt-1 text-xs uppercase tracking-wider text-white/60">{label}</div></div> }
+function SectionIntro({ eyebrow, title, copy, light = false }: { eyebrow: string; title: string; copy: string; light?: boolean }) { return <div className="max-w-xl"><p className={`text-xs font-bold uppercase tracking-[0.25em] ${light ? 'text-[#d8c477]' : 'text-[#8c7752]'}`}>{eyebrow}</p><h2 className={`mt-4 font-serif text-4xl leading-tight md:text-5xl ${light ? 'text-white' : 'text-[#123d24]'}`}>{title}</h2><p className={`mt-5 leading-7 ${light ? 'text-white/65' : 'text-[#6d4c41]'}`}>{copy}</p></div> }
+function ParkCard({ park, index }: { park: typeof parks[number]; index: number }) { return <motion.article initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ delay: index * .05 }} className="group overflow-hidden rounded-2xl bg-white shadow-[0_10px_30px_rgba(18,61,36,.07)]"><div className="relative h-56 overflow-hidden"><img src={park.image} alt={park.name} className="size-full object-cover transition duration-700 group-hover:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-[#123d24]/70 to-transparent" /><div className="absolute bottom-4 left-5 text-white"><p className="flex items-center gap-1 text-xs"><MapPin size={13} /> {park.location}</p><h3 className="mt-1 font-serif text-2xl">{park.name}</h3></div></div><div className="p-5"><div className="flex justify-between text-xs text-[#6d4c41]"><span>{park.size}</span><span className="font-semibold text-[#1b5e20]">{park.activity}</span></div><p className="mt-4 text-sm leading-6 text-[#6d4c41]">{park.wildlife}</p><a href="#contact" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#1b5e20]">Learn more <ArrowRight size={15} /></a></div></motion.article> }
+function Impact({ icon: Icon, value, label }: { icon: typeof Leaf; value: string; label: string }) { return <div className="rounded-2xl border border-[#d9d3c7] bg-white p-6"><Icon className="text-[#1b5e20]" size={25} /><div className="mt-8 font-serif text-4xl text-[#123d24]">{value}</div><p className="mt-2 text-sm text-[#6d4c41]">{label}</p></div> }
+function FooterColumn({ title, links }: { title: string; links: string[] }) { return <div><h3 className="font-semibold">{title}</h3><ul className="mt-4 space-y-3 text-sm text-white/60">{links.map((link) => <li key={link}><a href="#top" className="hover:text-[#d8c477]">{link}</a></li>)}</ul></div> }
+
+// Future Django REST API boundary: replace static arrays with typed fetchers in lib/api.ts.
+export type UwaApiClient = { listParks: () => Promise<typeof parks>; listServices: () => Promise<typeof services> }
+

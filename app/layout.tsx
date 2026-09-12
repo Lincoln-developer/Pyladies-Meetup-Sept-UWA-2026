@@ -3,9 +3,15 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Uganda Wildlife Authority | Protecting Uganda’s Wild Places',
+  description: 'Explore Uganda’s national parks, apply for permits, plan your safari, and discover the conservation work of the Uganda Wildlife Authority.',
   generator: 'v0.app',
+  keywords: ['Uganda Wildlife Authority', 'Uganda safari', 'national parks Uganda', 'gorilla trekking', 'conservation'],
+  openGraph: {
+    title: 'Uganda Wildlife Authority',
+    description: 'Protecting Uganda’s wildlife. Conserving nature. Inspiring generations.',
+    type: 'website',
+  },
   icons: {
     icon: [
       {
