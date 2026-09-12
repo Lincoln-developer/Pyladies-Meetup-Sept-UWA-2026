@@ -58,7 +58,7 @@ export default function Home() {
       </header>
 
       <section id="top" className="relative flex min-h-[720px] items-end overflow-hidden bg-[#123d24] text-white">
-        <motion.img src="/uwa-hero.png" alt="Mountain gorilla in the Bwindi forest" initial={{ scale: 1.05 }} animate={{ scale: 1.12 }} transition={{ duration: 18, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }} className="absolute inset-0 size-full object-cover object-center" />
+        <motion.div initial={{ scale: 1.04, x: '-1%' }} animate={{ scale: 1.14, x: '1%' }} transition={{ duration: 16, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }} className="absolute inset-[-3%]" aria-hidden="true"><img src="/uwa-hero.png" alt="Mountain gorilla in the Bwindi forest" className="size-full object-cover object-center" /></motion.div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2619]/90 via-[#0b2619]/55 to-transparent" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-48 lg:px-8 lg:pb-24">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8 }} className="max-w-3xl">
